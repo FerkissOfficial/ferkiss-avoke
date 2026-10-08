@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ferkiss Avoke | Demo Trading Portal</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#0a0f1d;color:#eef2ff}
+.container{max-width:1100px;margin:auto;padding:24px}.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.logo{font-size:24px;font-weight:800}.logo span{color:#6ee7b7}
+.badge{font-size:12px;padding:7px 10px;border:1px solid #31506a;border-radius:999px;color:#9fb3c8}
+.hero{padding:70px 0 45px;display:grid;grid-template-columns:1.3fr .7fr;gap:35px;align-items:center}
+h1{font-size:52px;line-height:1.05;margin:0 0 18px}h2{margin-top:0}
+p{color:#aebbd0;line-height:1.7}.accent{color:#6ee7b7}
+.card{background:#111827;border:1px solid #263449;border-radius:18px;padding:22px;box-shadow:0 15px 40px #0004}
+input,button{width:100%;padding:13px;border-radius:10px;border:1px solid #334155;margin-top:10px}
+input{background:#0b1220;color:white}button{background:#6ee7b7;color:#07120e;font-weight:800;cursor:pointer;border:0}
+button.secondary{background:#1b293c;color:#e8eef7}.notice{padding:12px;border-radius:10px;background:#1b2a22;color:#b8f5d8;font-size:13px;margin-bottom:14px}
+.hidden{display:none}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:25px 0}.stat{font-size:28px;font-weight:800;margin-top:8px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px;border-bottom:1px solid #253247;color:#cbd5e1}
+footer{padding:40px 0;color:#8292a8;text-align:center}.wa{display:inline-block;text-decoration:none;color:#07120e;background:#6ee7b7;padding:12px 18px;border-radius:10px;font-weight:800;margin-top:12px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:35px}h1{font-size:39px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="nav"><div class="logo">Ferkiss<span>Avoke</span></div><div class="badge">DEMO • NO REAL MONEY</div></nav>
+
+<section id="landing" class="hero">
+<div>
+<div class="badge">Professional Demo Trading Portal</div>
+<h1>Trade smarter.<br><span class="accent">Learn with confidence.</span></h1>
+<p>A professional-looking paper-trading experience created for Ferkiss Avoke. All balances and transactions are simulated and have no cash value.</p>
+<a class="wa" href="https://wa.me/23408148324087" target="_blank">Contact on WhatsApp</a>
+</div>
+<div class="card">
+<div class="notice">Demo only — no real deposits or withdrawals.</div>
+<h2>Create demo account</h2>
+<input id="name" placeholder="Full name">
+<input id="email" type="email" placeholder="Email address">
+<input id="password" type="password" placeholder="Password">
+<button onclick="register()">Register</button>
+<p id="msg"></p>
+</div>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="nav"><div><h2>Welcome, <span id="userName"></span></h2><p>Paper-trading dashboard</p></div><button class="secondary" style="width:auto;padding:10px 16px" onclick="logout()">Log out</button></div>
+<div class="notice">DEMO ACCOUNT: The balance below is simulated. It cannot be deposited, withdrawn, or converted to real money.</div>
+<div class="grid">
+<div class="card"><small>Demo Balance</small><div class="stat" id="balance">$10,000.00</div></div>
+<div class="card"><small>Portfolio Value</small><div class="stat" id="portfolio">$10,000.00</div></div>
+<div class="card"><small>Account Status</small><div class="stat" style="font-size:20px">Active Demo</div></div>
+</div>
+<div class="card">
+<h2>Markets</h2>
+<table><thead><tr><th>Asset</th><th>Price</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>BTC/USD</td><td>$68,420</td><td><button onclick="paperTrade('BTC/USD')">Paper Buy</button></td></tr>
+<tr><td>EUR/USD</td><td>1.1732</td><td><button onclick="paperTrade('EUR/USD')">Paper Buy</button></td></tr>
+<tr><td>Gold/USD</td><td>$3,980</td><td><button onclick="paperTrade('Gold/USD')">Paper Buy</button></td></tr>
+</tbody></table>
+</div>
+<div class="card" style="margin-top:16px"><h2>Activity</h2><div id="activity">No paper trades yet.</div></div>
+</section>
+
+<footer>© 2026 Ferkiss Avoke • Demonstration website • <a href="https://wa.me/23408148324087" style="color:#6ee7b7">WhatsApp</a></footer>
+</div>
+<script>
+function register(){
+ const n=document.getElementById('name').value.trim(), e=document.getElementById('email').value.trim(), p=document.getElementById('password').value;
+ if(!n||!e||p.length<4){document.getElementById('msg').textContent='Enter your name, email, and a password of at least 4 characters.';return}
+ localStorage.setItem('ferkissDemoUser',n); showDash(n);
+}
+function showDash(n){document.getElementById('landing').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');document.getElementById('userName').textContent=n}
+function logout(){localStorage.removeItem('ferkissDemoUser');location.reload()}
+function paperTrade(asset){
+ const a=document.getElementById('activity'); const row=document.createElement('p'); row.textContent='Paper Buy placed for '+asset+' (simulation only).'; a.prepend(row);
+}
+const saved=localStorage.getItem('ferkissDemoUser'); if(saved) showDash(saved);
+</script>
+</body></html>
